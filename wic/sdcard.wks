@@ -1,0 +1,9 @@
+# short-description: Example of partitioned image with complex layout
+# long-description: This image contains boot partition and 3 rootfs partitions
+# created from core-image-minimal and wic-image-minimal image recipes.
+
+part --fstype swap --size 1G --ondisk mmcblk0 --label swap --part-name swap
+part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --part-name boot --active --align 1024 --size 200M --extra-space 0
+part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label rootfs --part-name rootfs --align 1024 --use-uuid
+
+bootloader --ptable gpt
