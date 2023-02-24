@@ -52,6 +52,8 @@ MACHINE ?= "${MACHINE}"
 USER_CLASSES ?= "buildstats buildhistory buildstats-summary"
 INHERIT += "uninative"
 DISTRO ?= "OpenBouffalo"
+BB_HASHSERVE_UPSTREAM = "openbouffalo.my-ho.st:8687"
+SSTATE_MIRRORS = "file://.* https://openbouffalo.my-ho.st:8443/sstate/PATH"
 EOF
 
 

@@ -10,6 +10,9 @@ BFLB_PACKAGES_MINIMAL = "resize-rootfs \
                         joe \
                         ca-certificates \
                         ntp \
+                        u-boot \
+                        opensbi \ 
+                        bl808-firmware \
                         "
 
 IMAGE_INSTALL = "packagegroup-core-boot \
