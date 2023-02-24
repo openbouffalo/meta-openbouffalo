@@ -2,7 +2,7 @@
 # Bootstrapper for buildbot slave
 
 DIR ?= "build"
-MACHINE="pine64-ox64"
+MACHINE="bl808"
 BITBAKEIMAGE="openbouffalo-image"
 RELEASE="kirkstone"
 CONFFILE="conf/auto.conf"

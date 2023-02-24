@@ -35,4 +35,4 @@ IMAGE_FEATURES:append = " allow-root-login ssh-server-dropbear package-managemen
 COPY_LIC_MANIFEST="0"
 COPY_LIC_DIRS="0"
 
-IMAGE_FSTYPES = "wic.bz2 tar.gz"
+IMAGE_FSTYPES = "wic.bz2"
