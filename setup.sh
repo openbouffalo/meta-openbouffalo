@@ -37,6 +37,8 @@ bitbake-layers add-layer $SRCDIR/meta-riscv
 bitbake-layers add-layer $SRCDIR/meta-bl808
 bitbake-layers add-layer $SRCDIR/meta-openbouffalo
 bitbake-layers add-layer $SRCDIR/meta-openembedded/meta-oe
+bitbake-layers add-layer $SRCDIR/meta-openembedded/meta-python
+bitbake-layers add-layer $SRCDIR/meta-openembedded/meta-networking
 
 
 # fix the configuration

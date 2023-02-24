@@ -8,6 +8,8 @@ BFLB_PACKAGES_MINIMAL = "resize-rootfs \
                         util-linux \
                         mc \
                         joe \
+                        ca-certificates \
+                        ntp \
                         "
 
 IMAGE_INSTALL = "packagegroup-core-boot \
@@ -26,7 +28,7 @@ IMAGE_ROOTFS_EXTRA_SPACE:append = "${@bb.utils.contains("DISTRO_FEATURES", "syst
 
 LICENSE_CREATE_PACKAGE = "0"
 IMAGE_FEATURES:remove = "lic-pkgs"
-IMAGE_FEATURES:append = " allow-root-login ssh-server-dropbear"
+IMAGE_FEATURES:append = " allow-root-login ssh-server-dropbear package-management"
 COPY_LIC_MANIFEST="0"
 COPY_LIC_DIRS="0"
 
