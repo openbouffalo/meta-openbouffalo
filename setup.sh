@@ -1,26 +1,40 @@
 #!/bin/bash
 # Bootstrapper for buildbot slave
 
-DIR ?= "build"
+DIR="build"
 MACHINE="bl808"
 BITBAKEIMAGE="openbouffalo-image"
-RELEASE="kirkstone"
+RELEASE=`git branch --show-current`
 CONFFILE="conf/auto.conf"
 SRCDIR=`pwd`
 # fix permissions set by buildbot
 #echo "Fixing permissions for buildbot"
 #umask -S u=rwx,g=rx,o=rx
 #chmod -R 755 .
+echo "Will use Yocto Release $RELEASE"
+
 
 echo "Cloning Necessary Layers"
-echo "Poky"
-git clone -q git://git.yoctoproject.org/poky && cd poky && git checkout -q $RELEASE && cd ..
-echo "meta-bl808"
-git clone -q https://github.com/Fishwaldo/meta-bl808.git && cd meta-bl808 && git checkout -q $RELEASE && cd ..
-echo "meta-riscv"
-git clone -q https://github.com/riscv/meta-riscv.git && cd meta-riscv && git checkout -q $RELEASE && cd ..
-echo "meta-openembedded"
-git clone -q https://github.com/openembedded/meta-openembedded.git && cd meta-openembedded && git checkout -q $RELEASE && cd ..
+if [ ! -d poky/.git ]
+then
+	echo "Poky"
+	git clone git://git.yoctoproject.org/poky && cd poky && git checkout -q $RELEASE && cd ..
+fi
+if [ ! -d meta-bl808/.git ]
+then
+	echo "meta-bl808"
+	git clone https://github.com/Fishwaldo/meta-bl808.git && cd meta-bl808 && git checkout -q $RELEASE && cd ..
+fi
+if [ ! -d meta-riscv/.git ]
+then
+	echo "meta-riscv"
+	git clone https://github.com/riscv/meta-riscv.git && cd meta-riscv && git checkout -q $RELEASE && cd ..
+fi
+if [ ! -d meta-openembedded/.git ]
+then
+	echo "meta-openembedded"
+	git clone https://github.com/openembedded/meta-openembedded.git && cd meta-openembedded && git checkout -q $RELEASE && cd ..
+fi
 
 
 # bootstrap OE
@@ -34,11 +48,11 @@ bitbake-layers add-layer $SRCDIR/poky/meta
 bitbake-layers add-layer $SRCDIR/poky/meta-poky
 bitbake-layers add-layer $SRCDIR/poky/meta-yocto-bsp
 bitbake-layers add-layer $SRCDIR/meta-riscv
-bitbake-layers add-layer $SRCDIR/meta-bl808
-bitbake-layers add-layer $SRCDIR/meta-openbouffalo
 bitbake-layers add-layer $SRCDIR/meta-openembedded/meta-oe
 bitbake-layers add-layer $SRCDIR/meta-openembedded/meta-python
 bitbake-layers add-layer $SRCDIR/meta-openembedded/meta-networking
+bitbake-layers add-layer $SRCDIR/meta-bl808
+bitbake-layers add-layer $SRCDIR
 
 
 # fix the configuration
@@ -60,10 +74,18 @@ EOF
 
 echo "To build an image run"
 echo "---------------------------------------------------"
-echo "MACHINE=pine64-ox64 bitbake openbouffalo-image     "
+echo "bitbake openbouffalo-image                         "
 echo "---------------------------------------------------"
 echo "Other Images: openboufffalo-image-dev              "
 echo "---------------------------------------------------"
+echo "To Build individual packages run                   "
+echo "bitbake <packagename>                              "
+echo "---------------------------------------------------"
+echo "If you wish to setup the BitBake Enviroment in the "
+echo "future then:                                       "
+echo "cd $SRCDIR; . poky/oe-init-build-env $DIR          "
+echo "---------------------------------------------------"
+
 
 # start build
 #echo "Starting build"
