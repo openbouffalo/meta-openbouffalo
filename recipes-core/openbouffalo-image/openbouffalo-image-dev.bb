@@ -1,9 +1,7 @@
 require openbouffalo-image.bb
 
-DESCRIPTION = "A small image just capable of allowing a device to boot and \
-is suitable for development work."
+DESCRIPTION = "A image suitable for development work on linux"
 
-#IMAGE_FEATURES += "dev-pkgs"
+IMAGE_INSTALL:append = " oblfr bl-mcu-sdk bflb-mcu-tool"
 
-
-EXTRA_IMAGE_FEATURES += "dbg-pkgs dev-pkgs tools-sdk tools-debug tools-testapps debug-tweaks"
+EXTRA_IMAGE_FEATURES += "dev-pkgs tools-sdk tools-debug tools-testapps debug-tweaks"
